@@ -80,7 +80,8 @@ jobs:
   bump_version:
     name: Bump to Next Version
     needs: [initialize, release_tag]
-    if: ${{ inputs.bump_next_version }}
+    # Always run this step (allow other branches to bump to next version although one of the branches failed)
+    if: ${{ inputs.bump_next_version && always() }}
     uses: ./.github/workflows/bump-release-version.yml
     with:
       tag_branches: ${{ inputs.tag_branches }}
