@@ -46,6 +46,8 @@ jobs:
     needs: [initialize]
     runs-on: ubuntu-latest
     strategy:
+      # Allow other branches to bump to next version although one of the branches failed
+      fail-fast: false
       matrix:
         branch: ${{fromJson(needs.initialize.outputs.branches)}}
     steps:

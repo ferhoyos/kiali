@@ -45,6 +45,8 @@ jobs:
     needs: [initialize]
     runs-on: ubuntu-latest
     strategy:
+      # Allow other branches to create release tag although one of the branches failed
+      fail-fast: false
       matrix:
         branch: ${{fromJson(needs.initialize.outputs.branches)}}
     steps:
