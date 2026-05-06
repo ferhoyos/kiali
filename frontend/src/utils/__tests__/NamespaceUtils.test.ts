@@ -1,4 +1,4 @@
-jest.mock('config', () => ({
+rstest.mock('config', () => ({
   serverConfig: {
     istioLabels: {
       injectionLabelName: 'istio-injection',

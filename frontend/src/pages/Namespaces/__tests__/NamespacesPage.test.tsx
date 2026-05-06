@@ -9,50 +9,51 @@ import { store } from '../../../store/ConfigStore';
 import { RefreshIntervalManual } from '../../../config/Config';
 import { HistoryManager } from '../../../app/History';
 import { Show } from '../../../types/Common';
+import type { Mock } from '@rstest/core';
 
-jest.mock('../NamespaceTrafficPolicies', () => ({
+rstest.mock('../NamespaceTrafficPolicies', () => ({
   NamespaceTrafficPolicies: (props: any) => <div data-test="NamespaceTrafficPolicies" {...props} />
 }));
 
-jest.mock('components/Badge/ControlPlaneBadge', () => ({
+rstest.mock('components/Badge/ControlPlaneBadge', () => ({
   ControlPlaneBadge: () => <span data-test="ControlPlaneBadge" />
 }));
 
-jest.mock('components/DefaultSecondaryMasthead/DefaultSecondaryMasthead', () => ({
+rstest.mock('components/DefaultSecondaryMasthead/DefaultSecondaryMasthead', () => ({
   DefaultSecondaryMasthead: ({ children }: { children?: React.ReactNode }) => (
     <div data-test="DefaultSecondaryMasthead">{children}</div>
   )
 }));
 
-jest.mock('components/Time/HealthComputeDurationMastheadToolbar', () => ({
+rstest.mock('components/Time/HealthComputeDurationMastheadToolbar', () => ({
   HealthComputeDurationMastheadToolbar: ({ children }: { children: React.ReactNode }) => <>{children}</>
 }));
 
-jest.mock('../../../services/Api', () => ({
-  getNamespaces: jest.fn(),
-  getClustersHealth: jest.fn(),
-  getClustersTls: jest.fn(),
-  getConfigValidations: jest.fn(),
-  getAllIstioConfigs: jest.fn(),
-  getGrafanaInfo: jest.fn(() => Promise.resolve({ data: {} })),
-  getErrorString: jest.fn(() => ''),
-  getPersesInfo: jest.fn(() => Promise.resolve({ data: {} })),
-  getControlPlanes: jest.fn(() => Promise.resolve({ data: [] }))
+rstest.mock('../../../services/Api', () => ({
+  getNamespaces: rstest.fn(),
+  getClustersHealth: rstest.fn(),
+  getClustersTls: rstest.fn(),
+  getConfigValidations: rstest.fn(),
+  getAllIstioConfigs: rstest.fn(),
+  getGrafanaInfo: rstest.fn(() => Promise.resolve({ data: {} })),
+  getErrorString: rstest.fn(() => ''),
+  getPersesInfo: rstest.fn(() => Promise.resolve({ data: {} })),
+  getControlPlanes: rstest.fn(() => Promise.resolve({ data: [] }))
 }));
 
-jest.mock('../../../utils/AlertUtils', () => ({
-  addDanger: jest.fn(),
-  addError: jest.fn()
+rstest.mock('../../../utils/AlertUtils', () => ({
+  addDanger: rstest.fn(),
+  addError: rstest.fn()
 }));
 
-jest.mock('../../../app/History', () => ({
+rstest.mock('../../../app/History', () => ({
   HistoryManager: {
-    deleteParam: jest.fn(),
-    getDuration: jest.fn(),
-    getNumericParam: jest.fn(),
-    getParam: jest.fn(),
-    setParam: jest.fn(),
-    getRefresh: jest.fn(() => 0)
+    deleteParam: rstest.fn(),
+    getDuration: rstest.fn(),
+    getNumericParam: rstest.fn(),
+    getParam: rstest.fn(),
+    setParam: rstest.fn(),
+    getRefresh: rstest.fn(() => 0)
   },
   URLParam: {
     DIRECTION: 'direction',
@@ -61,11 +62,11 @@ jest.mock('../../../app/History', () => ({
     SORT: 'sort'
   },
   location: {
-    getPathname: jest.fn(() => '/namespaces'),
-    getSearch: jest.fn(() => '')
+    getPathname: rstest.fn(() => '/namespaces'),
+    getSearch: rstest.fn(() => '')
   },
   router: {
-    navigate: jest.fn(),
+    navigate: rstest.fn(),
     state: {
       location: {
         pathname: '/namespaces',
@@ -77,7 +78,7 @@ jest.mock('../../../app/History', () => ({
   webRoot: '/'
 }));
 
-jest.mock('utils/I18nUtils', () => ({
+rstest.mock('utils/I18nUtils', () => ({
   t: (key: string) => key,
   tMap: (m: Record<string, string>) => m,
   useKialiTranslation: () => ({
@@ -117,7 +118,7 @@ const defaultReduxProps = {
   minTLS: 'TLS_AUTO',
   navCollapse: false,
   refreshInterval: 15000 as IntervalInMilliseconds,
-  dispatch: jest.fn()
+  dispatch: rstest.fn()
 };
 
 const defaultProps = {
@@ -127,12 +128,12 @@ const defaultProps = {
 
 describe('NamespacesPageComponent', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
-    (HistoryManager.getParam as jest.Mock).mockReturnValue(undefined);
-    (HistoryManager.getRefresh as jest.Mock).mockReturnValue(RefreshIntervalManual);
-    (API.getControlPlanes as jest.Mock).mockResolvedValue({ data: [] });
-    (API.getGrafanaInfo as jest.Mock).mockResolvedValue({ data: {} });
-    (API.getPersesInfo as jest.Mock).mockResolvedValue({ data: {} });
+    rstest.clearAllMocks();
+    (HistoryManager.getParam as Mock).mockReturnValue(undefined);
+    (HistoryManager.getRefresh as Mock).mockReturnValue(RefreshIntervalManual);
+    (API.getControlPlanes as Mock).mockResolvedValue({ data: [] });
+    (API.getGrafanaInfo as Mock).mockResolvedValue({ data: {} });
+    (API.getPersesInfo as Mock).mockResolvedValue({ data: {} });
   });
 
   describe('Component initialization', () => {
@@ -170,9 +171,9 @@ describe('NamespacesPageComponent', () => {
           <NamespacesPageComponent ref={ref} {...defaultProps} refreshInterval={15000} />
         </Provider>
       );
-      const loadSpy = jest.spyOn(ref.current!, 'load');
+      const loadSpy = rstest.spyOn(ref.current!, 'load');
 
-      (HistoryManager.getRefresh as jest.Mock).mockReturnValue(15000);
+      (HistoryManager.getRefresh as Mock).mockReturnValue(15000);
       ref.current!.componentDidMount();
 
       expect(loadSpy).toHaveBeenCalled();
@@ -185,9 +186,9 @@ describe('NamespacesPageComponent', () => {
           <NamespacesPageComponent ref={ref} {...defaultProps} refreshInterval={RefreshIntervalManual} />
         </Provider>
       );
-      const loadSpy = jest.spyOn(ref.current!, 'load');
+      const loadSpy = rstest.spyOn(ref.current!, 'load');
 
-      (HistoryManager.getRefresh as jest.Mock).mockReturnValue(RefreshIntervalManual);
+      (HistoryManager.getRefresh as Mock).mockReturnValue(RefreshIntervalManual);
       ref.current!.componentDidMount();
 
       expect(loadSpy).not.toHaveBeenCalled();
@@ -201,7 +202,7 @@ describe('NamespacesPageComponent', () => {
           <NamespacesPageComponent ref={ref} {...defaultProps} lastRefreshAt={firstLast} />
         </Provider>
       );
-      const loadSpy = jest.spyOn(ref.current!, 'load');
+      const loadSpy = rstest.spyOn(ref.current!, 'load');
 
       rerender(
         <Provider store={store}>
@@ -219,7 +220,7 @@ describe('NamespacesPageComponent', () => {
           <NamespacesPageComponent ref={ref} {...defaultProps} />
         </Provider>
       );
-      const cancelAllSpy = jest.spyOn(ref.current!['promises'], 'cancelAll');
+      const cancelAllSpy = rstest.spyOn(ref.current!['promises'], 'cancelAll');
 
       unmount();
 
@@ -229,7 +230,7 @@ describe('NamespacesPageComponent', () => {
 
   describe('load method', () => {
     it('fetches and processes namespaces', async () => {
-      (API.getNamespaces as jest.Mock).mockResolvedValue({
+      (API.getNamespaces as Mock).mockResolvedValue({
         data: [
           {
             name: 'default',
@@ -269,7 +270,7 @@ describe('NamespacesPageComponent', () => {
 
     it('handles API errors gracefully', async () => {
       const error = { isCanceled: false, message: 'API Error' };
-      (API.getNamespaces as jest.Mock).mockRejectedValue(error);
+      (API.getNamespaces as Mock).mockRejectedValue(error);
 
       const ref = React.createRef<NamespacesPageComponent>();
       render(
@@ -286,7 +287,7 @@ describe('NamespacesPageComponent', () => {
     });
 
     it('filters namespaces by name filter', async () => {
-      (API.getNamespaces as jest.Mock).mockResolvedValue({
+      (API.getNamespaces as Mock).mockResolvedValue({
         data: [
           {
             name: 'default',
@@ -331,7 +332,7 @@ describe('NamespacesPageComponent', () => {
         workloadHealth: {}
       });
 
-      (API.getClustersHealth as jest.Mock).mockResolvedValue(mockHealthResponse);
+      (API.getClustersHealth as Mock).mockResolvedValue(mockHealthResponse);
 
       const ref = React.createRef<NamespacesPageComponent>();
       render(
@@ -348,7 +349,7 @@ describe('NamespacesPageComponent', () => {
           id: 'namespace',
           title: 'Name',
           param: 'ns',
-          compare: jest.fn(),
+          compare: rstest.fn(),
           isNumeric: false
         });
       });
@@ -359,7 +360,7 @@ describe('NamespacesPageComponent', () => {
 
   describe('fetchTLS', () => {
     it('fetches TLS status for namespaces', async () => {
-      (API.getClustersTls as jest.Mock).mockResolvedValue({
+      (API.getClustersTls as Mock).mockResolvedValue({
         data: [
           {
             namespace: 'default',
@@ -386,7 +387,7 @@ describe('NamespacesPageComponent', () => {
           id: 'mtls',
           title: 'mTLS',
           param: 'mtls',
-          compare: jest.fn(),
+          compare: rstest.fn(),
           isNumeric: false
         });
       });
@@ -397,7 +398,7 @@ describe('NamespacesPageComponent', () => {
 
   describe('fetchValidations', () => {
     it('fetches validations for namespaces', async () => {
-      (API.getConfigValidations as jest.Mock).mockResolvedValue({
+      (API.getConfigValidations as Mock).mockResolvedValue({
         data: [
           {
             namespace: 'default',
@@ -407,7 +408,7 @@ describe('NamespacesPageComponent', () => {
         ]
       });
 
-      (API.getAllIstioConfigs as jest.Mock).mockResolvedValue({
+      (API.getAllIstioConfigs as Mock).mockResolvedValue({
         data: {
           resources: {}
         }
@@ -428,7 +429,7 @@ describe('NamespacesPageComponent', () => {
           id: 'validations',
           title: 'Validations',
           param: 'validations',
-          compare: jest.fn(),
+          compare: rstest.fn(),
           isNumeric: false
         });
       });

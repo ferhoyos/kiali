@@ -8,32 +8,33 @@ import { DurationInSeconds } from 'types/Common';
 import * as API from 'services/Api';
 import { getGVKTypeString } from '../../../utils/IstioConfigUtils';
 import { gvkType } from '../../../types/IstioConfigList';
+import type { Mock } from '@rstest/core';
 
-jest.mock('services/Api', () => ({
-  getIstioPermissions: jest.fn(() => Promise.resolve({ data: {} })),
-  updateNamespace: jest.fn(() => Promise.resolve({})),
-  deleteIstioConfigDetail: jest.fn(() => Promise.resolve({})),
-  createIstioConfigDetail: jest.fn(() => Promise.resolve({}))
+rstest.mock('services/Api', () => ({
+  getIstioPermissions: rstest.fn(() => Promise.resolve({ data: {} })),
+  updateNamespace: rstest.fn(() => Promise.resolve({})),
+  deleteIstioConfigDetail: rstest.fn(() => Promise.resolve({})),
+  createIstioConfigDetail: rstest.fn(() => Promise.resolve({}))
 }));
 
-jest.mock('components/IstioConfigPreview/IstioConfigPreview', () => ({
+rstest.mock('components/IstioConfigPreview/IstioConfigPreview', () => ({
   IstioConfigPreview: (props: any) => (
     <div data-test="IstioConfigPreview" data-is-open={props.isOpen ? 'true' : 'false'} />
   ),
   ConfigPreviewItem: {}
 }));
 
-jest.mock('services/GraphDataSource', () => ({
-  GraphDataSource: jest.fn().mockImplementation(() => ({
-    on: jest.fn(),
-    fetchForNamespace: jest.fn()
+rstest.mock('services/GraphDataSource', () => ({
+  GraphDataSource: rstest.fn().mockImplementation(() => ({
+    on: rstest.fn(),
+    fetchForNamespace: rstest.fn()
   }))
 }));
 
-jest.mock('utils/AlertUtils', () => ({
-  addDanger: jest.fn(),
-  addError: jest.fn(),
-  addSuccess: jest.fn()
+rstest.mock('utils/AlertUtils', () => ({
+  addDanger: rstest.fn(),
+  addError: rstest.fn(),
+  addSuccess: rstest.fn()
 }));
 
 const mockNamespaceInfo: NamespaceInfo = {
@@ -54,10 +55,10 @@ const mockNamespaceInfo: NamespaceInfo = {
 const defaultProps = {
   controlPlanes: [] as ControlPlane[],
   duration: 600 as DurationInSeconds,
-  hideConfirmModal: jest.fn(),
+  hideConfirmModal: rstest.fn(),
   isOpen: true,
   kind: 'policy',
-  load: jest.fn(),
+  load: rstest.fn(),
   nsInfo: mockNamespaceInfo,
   nsTarget: 'test-namespace',
   opTarget: 'create'
@@ -65,7 +66,7 @@ const defaultProps = {
 
 describe('NamespaceTrafficPolicies', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    rstest.clearAllMocks();
   });
 
   describe('Component initialization', () => {
@@ -213,7 +214,7 @@ describe('NamespaceTrafficPolicies', () => {
       const { rerender } = render(
         <NamespaceTrafficPolicies ref={ref} {...defaultProps} kind="injection" opTarget="enable" />
       );
-      const fetchPermissionSpy = jest.spyOn(ref.current!, 'fetchPermission').mockImplementation(() => {});
+      const fetchPermissionSpy = rstest.spyOn(ref.current!, 'fetchPermission').mockImplementation(() => {});
 
       rerender(
         <NamespaceTrafficPolicies
@@ -233,7 +234,7 @@ describe('NamespaceTrafficPolicies', () => {
       const { rerender } = render(
         <NamespaceTrafficPolicies ref={ref} {...defaultProps} kind="policy" opTarget="update" />
       );
-      const generateTrafficPoliciesSpy = jest
+      const generateTrafficPoliciesSpy = rstest
         .spyOn(ref.current!, 'generateTrafficPolicies')
         .mockImplementation(() => {});
 
@@ -278,7 +279,7 @@ describe('NamespaceTrafficPolicies', () => {
 
   describe('fetchPermission', () => {
     it('sets disableOp to false when permissions are granted', async () => {
-      (API.getIstioPermissions as jest.Mock).mockResolvedValue({
+      (API.getIstioPermissions as Mock).mockResolvedValue({
         data: {
           'test-namespace': {
             [getGVKTypeString(gvkType.AuthorizationPolicy)]: {
@@ -302,7 +303,7 @@ describe('NamespaceTrafficPolicies', () => {
     });
 
     it('sets disableOp to true when permissions are not granted', async () => {
-      (API.getIstioPermissions as jest.Mock).mockResolvedValue({
+      (API.getIstioPermissions as Mock).mockResolvedValue({
         data: {
           'test-namespace': {
             [getGVKTypeString(gvkType.AuthorizationPolicy)]: {
@@ -336,7 +337,7 @@ describe('NamespaceTrafficPolicies', () => {
       const user = userEvent.setup();
       const ref = React.createRef<NamespaceTrafficPolicies>();
       render(<NamespaceTrafficPolicies ref={ref} {...defaultProps} kind="injection" opTarget="enable" />);
-      const onAddRemoveAutoInjectionSpy = jest
+      const onAddRemoveAutoInjectionSpy = rstest
         .spyOn(ref.current!, 'onAddRemoveAutoInjection')
         .mockImplementation(() => {});
 
@@ -353,7 +354,7 @@ describe('NamespaceTrafficPolicies', () => {
       const user = userEvent.setup();
       const ref = React.createRef<NamespaceTrafficPolicies>();
       render(<NamespaceTrafficPolicies ref={ref} {...defaultProps} kind="ambient" opTarget="enable" />);
-      const onAddRemoveAutoInjectionSpy = jest
+      const onAddRemoveAutoInjectionSpy = rstest
         .spyOn(ref.current!, 'onAddRemoveAutoInjection')
         .mockImplementation(() => {});
 
@@ -370,7 +371,7 @@ describe('NamespaceTrafficPolicies', () => {
       const user = userEvent.setup();
       const ref = React.createRef<NamespaceTrafficPolicies>();
       render(<NamespaceTrafficPolicies ref={ref} {...defaultProps} kind="canary" opTarget="revision-1" />);
-      const onUpgradeDowngradeIstioSpy = jest
+      const onUpgradeDowngradeIstioSpy = rstest
         .spyOn(ref.current!, 'onUpgradeDowngradeIstio')
         .mockImplementation(() => {});
 
@@ -387,7 +388,7 @@ describe('NamespaceTrafficPolicies', () => {
       const user = userEvent.setup();
       const ref = React.createRef<NamespaceTrafficPolicies>();
       render(<NamespaceTrafficPolicies ref={ref} {...defaultProps} kind="policy" opTarget="create" />);
-      const onAddRemoveTrafficPoliciesSpy = jest
+      const onAddRemoveTrafficPoliciesSpy = rstest
         .spyOn(ref.current!, 'onAddRemoveTrafficPolicies')
         .mockImplementation(() => {});
 
@@ -403,7 +404,7 @@ describe('NamespaceTrafficPolicies', () => {
 
   describe('onHideConfirmModal', () => {
     it('resets state and calls hideConfirmModal prop', () => {
-      const hideConfirmModalSpy = jest.fn();
+      const hideConfirmModalSpy = rstest.fn();
       const ref = React.createRef<NamespaceTrafficPolicies>();
       render(<NamespaceTrafficPolicies ref={ref} {...defaultProps} hideConfirmModal={hideConfirmModalSpy} />);
 
