@@ -289,7 +289,7 @@ class NamespaceDropdownComponent extends React.PureComponent<NamespaceDropdownPr
 
   onNamespaceToggled = (event): void => {
     const namespace = event.target.value;
-    const selectedNamespaces = !!this.state.selectedNamespaces.find(n => n.name === namespace)
+    const selectedNamespaces = this.state.selectedNamespaces.find(n => n.name === namespace)
       ? this.state.selectedNamespaces.filter(n => n.name !== namespace)
       : this.state.selectedNamespaces.concat([{ name: event.target.value } as Namespace]);
     this.setState({ selectedNamespaces: selectedNamespaces });

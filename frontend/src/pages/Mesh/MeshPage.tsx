@@ -320,7 +320,7 @@ class MeshPageComponent extends React.Component<MeshPageProps, MeshPageState> {
       meshData: {
         elements: EMPTY_MESH_DATA,
         elementsChanged: this.elementsChanged(prevElements, EMPTY_MESH_DATA),
-        errorMessage: !!errorMessage ? errorMessage : undefined,
+        errorMessage: errorMessage ? errorMessage : undefined,
         fetchParams: fetchParams,
         isError: true,
         isLoading: false,

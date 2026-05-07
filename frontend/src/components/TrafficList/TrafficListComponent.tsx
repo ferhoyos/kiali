@@ -294,7 +294,7 @@ class TrafficListComponent extends FilterComponent.Component<
             </Tooltip>,
             <>
               <PFBadge badge={item.badge} position={TooltipPosition.top} keyValue={`tt_badge_${i}`} />
-              {!!links.detail ? (
+              {links.detail ? (
                 <KialiLink key={`link_d_${item.badge}_${name}`} to={links.detail}>
                   {name}
                 </KialiLink>

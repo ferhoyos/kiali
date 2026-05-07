@@ -9,7 +9,7 @@ export default defineConfig({
   include: ['src/**/__tests__/**/*.test.{ts,tsx}'],
   resolve: {
     alias: {
-      'react-dom/client': path.resolve(__dirname, 'src/test-shims/react-dom-client.js')
+      'react-dom/client': path.resolve(__dirname, 'src/test-shims/react-dom-client.cjs')
     }
   },
   setupFiles: ['./src/setupTests.ts'],

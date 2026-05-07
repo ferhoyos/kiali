@@ -1236,13 +1236,13 @@ export class WorkloadPodLogsComponent extends React.Component<WorkloadPodLogsPro
   private filteredEntries = memoize((entries: Entry[], showValue: string, hideValue: string, useRegex: boolean) => {
     let filteredEntries = entries;
 
-    if (!!showValue) {
+    if (showValue) {
       if (useRegex) {
         try {
           const regexp = RegExp(showValue);
           filteredEntries = filteredEntries.filter(e => !e.logEntry || regexp.test(e.logEntry.message));
 
-          if (!!this.state.showError) {
+          if (this.state.showError) {
             this.setState({ showError: undefined });
           }
         } catch (e) {
@@ -1255,13 +1255,13 @@ export class WorkloadPodLogsComponent extends React.Component<WorkloadPodLogsPro
       }
     }
 
-    if (!!hideValue) {
+    if (hideValue) {
       if (useRegex) {
         try {
           const regexp = RegExp(hideValue);
           filteredEntries = filteredEntries.filter(e => !e.logEntry || !regexp.test(e.logEntry.message));
 
-          if (!!this.state.hideError) {
+          if (this.state.hideError) {
             this.setState({ hideError: undefined });
           }
         } catch (e) {

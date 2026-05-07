@@ -284,7 +284,7 @@ const TopologyContent: React.FC<{
       return undefined;
     }
 
-    if (!!trace) {
+    if (trace) {
       showTrace(controller, graphData.fetchParams.graphType, trace);
     }
 

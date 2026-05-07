@@ -178,7 +178,7 @@ class ReplayComponent extends React.PureComponent<ReplayProps, ReplayState> {
     const urlParams = new URLSearchParams(location.getSearch());
     const urlReplayInterval = HistoryManager.getParam(URLParam.GRAPH_REPLAY_INTERVAL, urlParams);
 
-    if (!!urlReplayInterval) {
+    if (urlReplayInterval) {
       interval = Number(urlReplayInterval);
     }
 
@@ -186,7 +186,7 @@ class ReplayComponent extends React.PureComponent<ReplayProps, ReplayState> {
     let isCustomStartTime = false;
     const urlReplayStart = HistoryManager.getParam(URLParam.GRAPH_REPLAY_START, urlParams);
 
-    if (!!urlReplayStart) {
+    if (urlReplayStart) {
       startTime = Number(urlReplayStart);
       isCustomStartTime = true;
     }
@@ -375,7 +375,7 @@ class ReplayComponent extends React.PureComponent<ReplayProps, ReplayState> {
   };
 
   private initReplay = (): void => {
-    const interval: IntervalInMilliseconds = !!this.state.replayWindow.interval
+    const interval: IntervalInMilliseconds = this.state.replayWindow.interval
       ? this.state.replayWindow.interval
       : defaultReplayInterval;
 

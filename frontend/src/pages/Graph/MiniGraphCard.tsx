@@ -230,7 +230,7 @@ class MiniGraphCardComponent extends React.Component<MiniGraphCardProps, MiniGra
                   graphData={{
                     elements: this.state.graphData,
                     elementsChanged: true,
-                    errorMessage: !!this.props.dataSource.errorMessage ? this.props.dataSource.errorMessage : undefined,
+                    errorMessage: this.props.dataSource.errorMessage ? this.props.dataSource.errorMessage : undefined,
                     isError: this.props.dataSource.isError,
                     isLoading: isLoading,
                     loaded: true,

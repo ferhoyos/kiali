@@ -109,7 +109,7 @@ export const getBadge = (nodeData: GraphNodeData, nodeType?: NodeType): React.Re
     case NodeType.SERVICE:
       return addExtensionBadge(
         nodeData,
-        !!nodeData.isServiceEntry ? (
+        nodeData.isServiceEntry ? (
           <PFBadge
             badge={PFBadges.ServiceEntry}
             size="sm"

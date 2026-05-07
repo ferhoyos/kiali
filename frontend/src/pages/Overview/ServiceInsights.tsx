@@ -396,7 +396,7 @@ export const ServiceInsights: React.FC = () => {
       setLatenciesError(true);
       setRatesError(true);
       setThroughputError(true);
-      // eslint-disable-next-line no-console
+
       console.error('Error fetching service insights data:', err);
     } finally {
       setIsLoading(false);

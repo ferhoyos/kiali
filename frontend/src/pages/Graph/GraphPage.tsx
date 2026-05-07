@@ -649,7 +649,7 @@ class GraphPageComponent extends React.Component<GraphPageProps, GraphPageState>
       graphData: {
         elements: EMPTY_GRAPH_DATA,
         elementsChanged: elementsChanged(prevElements, EMPTY_GRAPH_DATA),
-        errorMessage: !!errorMessage ? errorMessage : undefined,
+        errorMessage: errorMessage ? errorMessage : undefined,
         fetchParams: fetchParams,
         isError: true,
         isLoading: false,
@@ -767,7 +767,7 @@ class GraphPageComponent extends React.Component<GraphPageProps, GraphPageState>
 
   private loadGraphDataFromBackend = (): void => {
     this.initTime = Date.now();
-    const queryTime: TimeInMilliseconds | undefined = !!this.props.replayQueryTime
+    const queryTime: TimeInMilliseconds | undefined = this.props.replayQueryTime
       ? this.props.replayQueryTime
       : undefined;
 

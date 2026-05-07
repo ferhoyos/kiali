@@ -409,7 +409,7 @@ export class TargetPanelNamespace extends React.Component<TargetPanelNamespacePr
   private renderIstioConfigStatus(ns: NamespaceInfo): React.ReactNode {
     let validations: ValidationStatus = { errors: 0, namespace: ns.name, objectCount: 0, warnings: 0 };
 
-    if (!!ns.validations) {
+    if (ns.validations) {
       validations = ns.validations;
     }
 

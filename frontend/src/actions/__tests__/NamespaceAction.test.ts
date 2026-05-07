@@ -4,7 +4,6 @@ import configureMockStore from 'redux-mock-store';
 import { NamespaceActions } from '../NamespaceAction';
 import { NamespaceThunkActions } from '../NamespaceThunkActions';
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 const reduxThunkModule = require('redux-thunk');
 const thunk = reduxThunkModule.thunk ?? reduxThunkModule.default;
 

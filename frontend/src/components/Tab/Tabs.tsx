@@ -92,7 +92,7 @@ export class ParameterizedTabs extends React.Component<TabsProps> {
   handleTabSelect = (tabKey: string): void => {
     const urlParams = new URLSearchParams(location.getSearch());
 
-    if (!!this.props.tabName) {
+    if (this.props.tabName) {
       urlParams.set(this.props.tabName, tabKey);
       router.navigate(`${location.getPathname()}?${urlParams.toString()}`);
     }

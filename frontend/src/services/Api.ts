@@ -1504,7 +1504,7 @@ export function deleteServiceTrafficRouting(
     );
 
     const paName = dr.hasPeerAuthentication();
-    if (!!paName) {
+    if (paName) {
       deletePromises.push(
         deleteIstioConfigDetail(dr.metadata.namespace ?? '', dicTypeToGVK[gvkType.PeerAuthentication], paName, cluster)
       );

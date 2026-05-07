@@ -83,7 +83,7 @@ class GraphToolbarComponent extends React.PureComponent<GraphToolbarProps> {
     const urlParams = new URLSearchParams(location.getSearch());
 
     const urlEdgeLabels = HistoryManager.getParam(URLParam.GRAPH_EDGE_LABEL, urlParams);
-    if (!!urlEdgeLabels) {
+    if (urlEdgeLabels) {
       if (urlEdgeLabels !== props.edgeLabels.join(',')) {
         props.setEdgeLabels(urlEdgeLabels.split(',') as EdgeLabelMode[]);
       }
@@ -92,7 +92,7 @@ class GraphToolbarComponent extends React.PureComponent<GraphToolbarProps> {
     }
 
     const urlRankLabels = HistoryManager.getParam(URLParam.GRAPH_RANK_BY, urlParams);
-    if (!!urlRankLabels) {
+    if (urlRankLabels) {
       if (urlRankLabels !== props.rankBy.join(',')) {
         props.setRankBy(urlRankLabels.split(',') as RankMode[]);
       }
@@ -110,7 +110,7 @@ class GraphToolbarComponent extends React.PureComponent<GraphToolbarProps> {
     }
 
     const urlGraphTraffic = HistoryManager.getParam(URLParam.GRAPH_TRAFFIC, urlParams);
-    if (!!urlGraphTraffic) {
+    if (urlGraphTraffic) {
       if (urlGraphTraffic !== props.trafficRates.join(',')) {
         props.setTrafficRates(urlGraphTraffic.split(',') as TrafficRate[]);
       }
@@ -119,7 +119,7 @@ class GraphToolbarComponent extends React.PureComponent<GraphToolbarProps> {
     }
 
     const urlGraphType = HistoryManager.getParam(URLParam.GRAPH_TYPE, urlParams) as GraphType;
-    if (!!urlGraphType) {
+    if (urlGraphType) {
       if (urlGraphType !== props.graphType) {
         props.setGraphType(urlGraphType);
       }
@@ -128,7 +128,7 @@ class GraphToolbarComponent extends React.PureComponent<GraphToolbarProps> {
     }
 
     const urlNamespaces = HistoryManager.getParam(URLParam.NAMESPACES, urlParams);
-    if (!!urlNamespaces) {
+    if (urlNamespaces) {
       if (urlNamespaces !== namespacesToString(props.activeNamespaces)) {
         props.setActiveNamespaces(namespacesFromString(urlNamespaces));
       }

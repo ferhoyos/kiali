@@ -81,7 +81,7 @@ const nodeContextMenu = (node: GraphElement, kiosk: string): Promise<React.React
   const menuOptions = options.map((o, i) => {
     return (
       // TODO: fix kiosk param
-      !!o.altClickHandler ? (
+      o.altClickHandler ? (
         <DropdownItem
           className={contextMenuStyle}
           key={`option-${i}`}

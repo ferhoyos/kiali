@@ -150,7 +150,7 @@ export const decorateGraphData = (graphData: GraphElements, duration: number): D
           decoratedNode.data = { ...prefixedLabels, ...decoratedNode.data };
         }
         // node.aggregate is set like aggregate=aggregateValue, split into distinct fields for the ui to use
-        if (!!decoratedNode.data.aggregate) {
+        if (decoratedNode.data.aggregate) {
           const aggr = decoratedNode.data.aggregate.split('=');
           decoratedNode.data.aggregate = aggr[0];
           decoratedNode.data.aggregateValue = aggr[1];

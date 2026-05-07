@@ -245,7 +245,7 @@ export class ClusterDropdownComponent extends React.PureComponent<ClusterDropdow
 
   onClusterToggled = event => {
     const cluster = event.target.value;
-    const selectedClusters = !!this.state.selectedClusters.find(cl => cl.name === cluster)
+    const selectedClusters = this.state.selectedClusters.find(cl => cl.name === cluster)
       ? this.state.selectedClusters.filter(cl => cl.name !== cluster)
       : this.state.selectedClusters.concat(serverConfig.clusters[event.target.value]);
     this.setState({ selectedClusters: selectedClusters });

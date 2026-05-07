@@ -287,7 +287,7 @@ const addSpan = (ele: Node | Edge | undefined, span: Span): void => {
   }
   const data = ele.getData();
   let hasSpans = data['hasSpans'];
-  if (!!hasSpans) {
+  if (hasSpans) {
     hasSpans.push(span);
   } else {
     hasSpans = [span];

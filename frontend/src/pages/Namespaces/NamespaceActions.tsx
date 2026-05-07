@@ -83,7 +83,7 @@ export const NamespaceActions: React.FC<Props> = (props: Props) => {
           data-test={action['data-test']}
           onClick={() => (action.action ? action.action(props.namespace) : undefined)}
         >
-          {action.title} {!!action.isExternal ? <ExternalLinkAltIcon /> : undefined}
+          {action.title} {action.isExternal ? <ExternalLinkAltIcon /> : undefined}
         </DropdownItem>
       );
 

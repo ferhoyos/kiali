@@ -20,7 +20,7 @@ rstest.mock('utils/VictoryChartsUtils', () => ({
 
 rstest.mock('@patternfly/react-charts/victory', () => {
   const React = require('react');
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+
   const MockChart = (props: any) => React.createElement('div', { 'data-test': 'chart', ...props }, props.children);
   MockChart.displayName = 'Chart';
   return {

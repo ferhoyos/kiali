@@ -3,7 +3,6 @@ import { NotificationCenterThunkActions } from '../NotificationCenterThunkAction
 import { MessageType } from '../../types/NotificationCenter';
 import configureMockStore from 'redux-mock-store';
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 const reduxThunkModule = require('redux-thunk');
 const thunk = reduxThunkModule.thunk ?? reduxThunkModule.default;
 
