@@ -11,11 +11,13 @@ on:
 jobs:
   dispatch:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
     - name: Dispatch to OSSMC
-      uses: actions/github-script@b7fb2001b410c9390cbe9e2c7d5cab7eefb7b29c # v7.0.1
+      uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
       with:
-        github-token: ${{ secrets.KIALI_BOT_TOKEN }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           await github.rest.repos.createDispatchEvent({
             owner: 'ferhoyos',
